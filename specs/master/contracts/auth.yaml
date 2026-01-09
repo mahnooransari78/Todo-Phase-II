@@ -1,0 +1,200 @@
+openapi: 3.0.0
+info:
+  title: Todo Application - Authentication API
+  version: 1.0.0
+  description: API for user authentication in the Todo application
+
+servers:
+  - url: http://localhost:8000/api
+    description: Development server
+
+paths:
+  /auth/register:
+    post:
+      summary: Register a new user
+      description: Create a new user account
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistrationRequest'
+      responses:
+        '201':
+          description: User registered successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  user:
+                    $ref: '#/components/schemas/User'
+                  token:
+                    type: string
+                    description: JWT token for authentication
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+
+  /auth/login:
+    post:
+      summary: Login user
+      description: Authenticate user and return JWT token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserLoginRequest'
+      responses:
+        '200':
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  user:
+                    $ref: '#/components/schemas/User'
+                  token:
+                    type: string
+                    description: JWT token for authentication
+        '400':
+          $ref: '#/components/responses/BadRequestError'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+  /auth/logout:
+    post:
+      summary: Logout user
+      description: Terminate user session
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Logout successful
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                  message:
+                    type: string
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  schemas:
+    UserRegistrationRequest:
+      type: object
+      required:
+        - email
+        - password
+        - name
+      properties:
+        email:
+          type: string
+          format: email
+          description: User's email address
+        password:
+          type: string
+          description: User's password
+          minLength: 8
+        name:
+          type: string
+          description: User's display name
+          maxLength: 255
+    UserLoginRequest:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+          description: User's email address
+        password:
+          type: string
+          description: User's password
+    User:
+      type: object
+      required:
+        - id
+        - email
+        - name
+        - created_at
+        - updated_at
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier for the user
+        email:
+          type: string
+          format: email
+          description: User's email address
+        name:
+          type: string
+          description: User's display name
+        email_verified:
+          type: boolean
+          default: false
+          description: Whether email has been verified
+        created_at:
+          type: string
+          format: date-time
+          description: Account creation timestamp
+        updated_at:
+          type: string
+          format: date-time
+          description: Last update timestamp
+        last_login:
+          type: string
+          format: date-time
+          description: Last login timestamp
+    Error:
+      type: object
+      required:
+        - error
+      properties:
+        error:
+          type: string
+          description: Error message
+        error_code:
+          type: string
+          description: Error code
+        timestamp:
+          type: string
+          format: date-time
+          description: Error timestamp
+        details:
+          type: array
+          items:
+            type: string
+          description: Additional error details
+
+  responses:
+    UnauthorizedError:
+      description: Unauthorized - Invalid or missing authentication token
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    BadRequestError:
+      description: Bad Request - Invalid request parameters or body
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'

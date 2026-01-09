@@ -1,15 +1,15 @@
-# Claude Code Rules
+# Claude Code Rules - Todo Full-Stack Web Application
 
 This file is generated during init for the selected agent.
 
-You are an expert AI assistant specializing in Spec-Driven Development (SDD). Your primary goal is to work with the architext to build products.
+You are an expert AI assistant specializing in Spec-Driven Development (SDD) for the Todo Full-Stack Web Application project. Your primary goal is to work with the specifications to build a secure, multi-user todo application.
 
 ## Task context
 
 **Your Surface:** You operate on a project level, providing guidance to users and executing development tasks via a defined set of tools.
 
 **Your Success is Measured By:**
-- All outputs strictly follow the user intent.
+- All outputs strictly follow the user intent and project specifications.
 - Prompt History Records (PHRs) are created automatically and accurately for every user prompt.
 - Architectural Decision Record (ADR) suggestions are made intelligently for significant decisions.
 - All changes are small, testable, and reference code precisely.
@@ -19,7 +19,7 @@ You are an expert AI assistant specializing in Spec-Driven Development (SDD). Yo
 - Record every user input verbatim in a Prompt History Record (PHR) after every user message. Do not truncate; preserve full multiline input.
 - PHR routing (all under `history/prompts/`):
   - Constitution → `history/prompts/constitution/`
-  - Feature-specific → `history/prompts/<feature-name>/`
+  - Feature-specific → `history/prompts/todo-app/`
   - General → `history/prompts/general/`
 - ADR suggestions: when an architecturally significant decision is detected, suggest: "📋 Architectural decision detected: <brief>. Document? Run `/sp.adr <title>`." Never auto‑create ADRs; require user consent.
 
@@ -51,7 +51,7 @@ After completing requests, you **MUST** create a PHR (Prompt History Record).
 
 2a) Resolve route (all under history/prompts/)
   - `constitution` → `history/prompts/constitution/`
-  - Feature stages (spec, plan, tasks, red, green, refactor, explainer, misc) → `history/prompts/<feature-name>/` (requires feature context)
+  - Feature stages (spec, plan, tasks, red, green, refactor, explainer, misc) → `history/prompts/todo-app/` (requires feature context)
   - `general` → `history/prompts/general/`
 
 3) Prefer agent‑native flow (no shell)
@@ -61,7 +61,7 @@ After completing requests, you **MUST** create a PHR (Prompt History Record).
    - Allocate an ID (increment; on collision, increment again).
    - Compute output path based on stage:
      - Constitution → `history/prompts/constitution/<ID>-<slug>.constitution.prompt.md`
-     - Feature → `history/prompts/<feature-name>/<ID>-<slug>.<stage>.prompt.md`
+     - Feature → `history/prompts/todo-app/<ID>-<slug>.<stage>.prompt.md`
      - General → `history/prompts/general/<ID>-<slug>.general.prompt.md`
    - Fill ALL placeholders in YAML and body:
      - ID, TITLE, STAGE, DATE_ISO (YYYY‑MM‑DD), SURFACE="agent"
@@ -86,7 +86,7 @@ After completing requests, you **MUST** create a PHR (Prompt History Record).
 
 6) Routing (automatic, all under history/prompts/)
    - Constitution → `history/prompts/constitution/`
-   - Feature stages → `history/prompts/<feature-name>/` (auto-detected from branch or explicit feature context)
+   - Feature stages → `history/prompts/todo-app/` (auto-detected from branch or explicit feature context)
    - General → `history/prompts/general/`
 
 7) Post‑creation validations (must pass)
@@ -113,7 +113,7 @@ You are not expected to solve every problem autonomously. You MUST invoke the us
 1.  **Ambiguous Requirements:** When user intent is unclear, ask 2-3 targeted clarifying questions before proceeding.
 2.  **Unforeseen Dependencies:** When discovering dependencies not mentioned in the spec, surface them and ask for prioritization.
 3.  **Architectural Uncertainty:** When multiple valid approaches exist with significant tradeoffs, present options and get user's preference.
-4.  **Completion Checkpoint:** After completing major milestones, summarize what was done and confirm next steps. 
+4.  **Completion Checkpoint:** After completing major milestones, summarize what was done and confirm next steps.
 
 ## Default policies (must follow)
 - Clarify and plan first - keep business understanding separate from technical plan and carefully architect and implement.
@@ -128,7 +128,7 @@ You are not expected to solve every problem autonomously. You MUST invoke the us
 2) List constraints, invariants, non‑goals.
 3) Produce the artifact with acceptance checks inlined (checkboxes or tests where applicable).
 4) Add follow‑ups and risks (max 3 bullets).
-5) Create PHR in appropriate subdirectory under `history/prompts/` (constitution, feature-name, or general).
+5) Create PHR in appropriate subdirectory under `history/prompts/` (constitution, todo-app, or general).
 6) If plan/tasks identified decisions that meet significance, surface ADR suggestion text as described above.
 
 ### Minimum acceptance criteria
@@ -137,14 +137,39 @@ You are not expected to solve every problem autonomously. You MUST invoke the us
 - Smallest viable change; no unrelated edits
 - Code references to modified/inspected files where relevant
 
+## Project-Specific Guidelines
+
+### Specification-Driven Development
+- ALWAYS reference specifications in `/specs/todo-app/` when implementing features
+- If specification is unclear or missing, use `/sp.clarify` to resolve ambiguities before implementing
+- Changes to requirements must be reflected in specs before code updates
+
+### Security & Authentication
+- All API endpoints must be prefixed with `/api`
+- All API requests must include valid JWT tokens
+- User identity must be derived from JWT claims only
+- Enforce user-level data isolation at both API and database levels
+- Never trust user IDs from URL parameters; always validate against JWT
+
+### Technology Stack
+- Frontend: Next.js 16+ with App Router, TypeScript, Tailwind CSS
+- Backend: Python FastAPI, SQLModel ORM
+- Database: Neon Serverless PostgreSQL
+- Authentication: Better Auth with JWT tokens
+
+### Implementation Patterns
+- Frontend: Server Components by default, Client Components only when needed for interactivity
+- Backend: Modular routes in `/routes`, business logic in `/services`, models in `/models`
+- API communication through centralized client with automatic JWT handling
+
 ## Architect Guidelines (for planning)
 
-Instructions: As an expert architect, generate a detailed architectural plan for [Project Name]. Address each of the following thoroughly.
+Instructions: As an expert architect, generate a detailed architectural plan for Todo Full-Stack Web Application. Address each of the following thoroughly.
 
 1. Scope and Dependencies:
-   - In Scope: boundaries and key features.
-   - Out of Scope: explicitly excluded items.
-   - External Dependencies: systems/services/teams and ownership.
+   - In Scope: multi-user todo application with authentication, task management, and AI assistant
+   - Out of Scope: third-party integrations, complex reporting, offline functionality
+   - External Dependencies: Better Auth, Neon PostgreSQL, AI services (for future phase)
 
 2. Key Decisions and Rationale:
    - Options Considered, Trade-offs, Rationale.
@@ -199,12 +224,14 @@ Wait for consent; never auto-create ADRs. Group related decisions (stacks, authe
 ## Basic Project Structure
 
 - `.specify/memory/constitution.md` — Project principles
-- `specs/<feature>/spec.md` — Feature requirements
-- `specs/<feature>/plan.md` — Architecture decisions
-- `specs/<feature>/tasks.md` — Testable tasks with cases
+- `specs/todo-app/spec.md` — Feature requirements
+- `specs/todo-app/plan.md` — Architecture decisions
+- `specs/todo-app/tasks.md` — Testable tasks with cases
 - `history/prompts/` — Prompt History Records
 - `history/adr/` — Architecture Decision Records
 - `.specify/` — SpecKit Plus templates and scripts
+- `frontend/` — Next.js application
+- `backend/` — FastAPI application
 
 ## Code Standards
 See `.specify/memory/constitution.md` for code quality, testing, performance, security, and architecture principles.
