@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
+import { useTheme } from 'next-themes';
 
 export default function DashboardLayout({
   children,
@@ -11,6 +12,7 @@ export default function DashboardLayout({
 }) {
   const pathname = usePathname();
   const router = useRouter();
+  const { theme } = useTheme();
   const [isAuthenticated, setIsAuthenticated] = useState<boolean | null>(null); // null = loading state
 
   useEffect(() => {
@@ -26,7 +28,7 @@ export default function DashboardLayout({
 
   // Don't render anything while checking authentication
   if (isAuthenticated === null) {
-    return <div className="min-h-screen bg-gray-50">Loading...</div>;
+    return <div className="min-h-screen bg-gray-50 dark:bg-gray-900">Loading...</div>;
   }
 
   // Don't render the layout if not authenticated (redirect will happen in useEffect)
@@ -35,21 +37,21 @@ export default function DashboardLayout({
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <header className="bg-white shadow">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900">
+      <header className="bg-white dark:bg-gray-800 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between h-16">
             <div className="flex">
               <div className="flex-shrink-0 flex items-center">
-                <h1 className="text-xl font-bold text-gray-900">Todo Dashboard</h1>
+                <h1 className="text-xl font-bold text-gray-900 dark:text-white">Todo Dashboard</h1>
               </div>
               <nav className="ml-6 flex space-x-8">
                 <Link
                   href="/dashboard/tasks"
                   className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                     pathname === '/dashboard/tasks'
-                      ? 'border-blue-500 text-gray-900'
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                      ? 'border-blue-500 text-gray-900 dark:text-white'
+                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white'
                   }`}
                 >
                   Tasks
@@ -58,8 +60,8 @@ export default function DashboardLayout({
                   href="/dashboard/profile"
                   className={`inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium ${
                     pathname === '/dashboard/profile'
-                      ? 'border-blue-500 text-gray-900'
-                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'
+                      ? 'border-blue-500 text-gray-900 dark:text-white'
+                      : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 dark:text-gray-300 dark:hover:text-white'
                   }`}
                 >
                   Profile

@@ -32,8 +32,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onError }) => {
       const response = await apiClient.login(formData);
       const { user, token } = response.data;
 
-      // Store token in localStorage
+      // Store token and user ID in localStorage
       localStorage.setItem('auth_token', token);
+      localStorage.setItem('userId', user.id); // Store user ID for chat API calls
 
       // Call success callback if provided
       if (onSuccess) {
@@ -41,7 +42,28 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onError }) => {
       }
     } catch (error: any) {
       console.error('Login error:', error);
-      const errorMessage = error.response?.data?.detail || 'Login failed';
+
+      // Handle different types of errors
+      let errorMessage = 'Login failed';
+      if (error.code === 'ECONNABORTED' || error.message?.includes('timeout')) {
+        errorMessage = 'Request timed out. Please check your internet connection and ensure the backend server is running.';
+      } else if (error.code === 'ERR_NETWORK' || !error.response) {
+        // Network error - server might be down or unreachable
+        errorMessage = 'Network error: Unable to reach the server. Please ensure the backend server is running and accessible.';
+      } else if (error.response) {
+        // Server responded with error status
+        if (error.response.status === 502) {
+          errorMessage = 'Server temporarily unavailable. Please check if the backend server is running.';
+        } else if (error.response.status === 503) {
+          errorMessage = 'Service temporarily unavailable. Please try again later.';
+        } else {
+          errorMessage = error.response.data?.detail || `Login failed: ${error.response.status} ${error.response.statusText}`;
+        }
+      } else {
+        // Something else happened
+        errorMessage = error.message || 'An unexpected error occurred during login.';
+      }
+
       if (onError) {
         onError(errorMessage);
       }

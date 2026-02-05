@@ -65,10 +65,10 @@ Examples of foundational tasks (adjust based on your project):
 
 > **NOTE: Write these tests FIRST, ensure they FAIL before implementation**
 
-- [ ] T012 [P] [US1] Contract test for GET /api/tasks endpoint in backend/tests/contract/test_tasks.py
-- [ ] T013 [P] [US1] Contract test for POST /api/tasks endpoint in backend/tests/contract/test_tasks.py
-- [ ] T014 [P] [US1] Contract test for PUT /api/tasks/{task_id} endpoint in backend/tests/contract/test_tasks.py
-- [ ] T015 [P] [US1] Contract test for DELETE /api/tasks/{task_id} endpoint in backend/tests/contract/test_tasks.py
+- [x] T012 [P] [US1] Contract test for GET /api/tasks endpoint in backend/tests/contract/test_tasks.py
+- [x] T013 [P] [US1] Contract test for POST /api/tasks endpoint in backend/tests/contract/test_tasks.py
+- [x] T014 [P] [US1] Contract test for PUT /api/tasks/{task_id} endpoint in backend/tests/contract/test_tasks.py
+- [x] T015 [P] [US1] Contract test for DELETE /api/tasks/{task_id} endpoint in backend/tests/contract/test_tasks.py
 
 ### Implementation for User Story 1
 
@@ -102,9 +102,9 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Tests for User Story 2 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T033 [P] [US2] Contract test for POST /api/auth/register endpoint in backend/tests/contract/test_auth.py
-- [ ] T034 [P] [US2] Contract test for POST /api/auth/login endpoint in backend/tests/contract/test_auth.py
-- [ ] T035 [P] [US2] Contract test for POST /api/auth/logout endpoint in backend/tests/contract/test_auth.py
+- [x] T033 [P] [US2] Contract test for POST /api/auth/register endpoint in backend/tests/contract/test_auth.py
+- [x] T034 [P] [US2] Contract test for POST /api/auth/login endpoint in backend/tests/contract/test_auth.py
+- [x] T035 [P] [US2] Contract test for POST /api/auth/logout endpoint in backend/tests/contract/test_auth.py
 
 ### Implementation for User Story 2
 
@@ -133,15 +133,15 @@ Examples of foundational tasks (adjust based on your project):
 
 ### Tests for User Story 3 (OPTIONAL - only if tests requested) ⚠️
 
-- [ ] T048 [P] [US3] Contract test for POST /api/ai/tasks endpoint in backend/tests/contract/test_ai.py
+- [x] T048 [P] [US3] Contract test for POST /api/ai/tasks endpoint in backend/tests/contract/test_ai.py
 
 ### Implementation for User Story 3
 
-- [ ] T049 [P] [US3] Create AI assistant service in backend/src/services/ai.py
-- [ ] T050 [US3] Create AI session model in backend/src/models/ai_session.py
-- [ ] T051 [US3] Implement POST /api/ai/tasks endpoint in backend/src/routes/ai.py
-- [ ] T052 [US3] Add AI assistant UI component in frontend/components/AI/AIAssistant.tsx
-- [ ] T053 [US3] Integrate AI assistant with task management in frontend/app/dashboard/tasks/page.tsx
+- [x] T049 [P] [US3] Create AI assistant service in backend/src/services/ai.py
+- [x] T050 [US3] Create AI session model in backend/src/models/ai_session.py
+- [x] T051 [US3] Implement POST /api/ai/tasks endpoint in backend/src/routes/ai.py
+- [x] T052 [US3] Add AI assistant UI component in frontend/components/AI/AIAssistant.tsx
+- [x] T053 [US3] Integrate AI assistant with task management in frontend/app/dashboard/tasks/page.tsx
 
 **Checkpoint**: All user stories should now be independently functional
 
@@ -155,12 +155,12 @@ Examples of foundational tasks (adjust based on your project):
 
 **Purpose**: Improvements that affect multiple user stories
 
-- [ ] T054 [P] Documentation updates in docs/
-- [ ] T055 Code cleanup and refactoring
-- [ ] T056 Performance optimization across all stories
-- [ ] T057 [P] Additional unit tests (if requested) in backend/tests/unit/ and frontend/tests/
-- [ ] T058 Security hardening
-- [ ] T059 Run quickstart.md validation
+- [x] T054 [P] Documentation updates in docs/
+- [x] T055 Code cleanup and refactoring
+- [x] T056 Performance optimization across all stories
+- [x] T057 [P] Additional unit tests (if requested) in backend/tests/unit/ and frontend/tests/
+- [x] T058 Security hardening
+- [x] T059 Run quickstart.md validation
 
 ---
 

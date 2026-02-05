@@ -10,3 +10,6 @@ argon2-cffi
 python-multipart
 alembic
 better-exceptions
+cohere
+openai
+mcp

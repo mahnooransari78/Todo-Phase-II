@@ -35,7 +35,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel, isEditing
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="title" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Title *
         </label>
         <input
@@ -45,12 +45,13 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel, isEditing
           value={formData.title}
           onChange={handleChange}
           required
-          className="mt-1 block w-full border border-gray-300 text-gray-600 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          className="w-full px-3 py-2 bg-glass dark:bg-glass-dark border border-glass dark:border-glass-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-900 dark:text-gray-100"
+          placeholder="Enter task title"
         />
       </div>
 
       <div>
-        <label htmlFor="description" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="description" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Description
         </label>
         <textarea
@@ -59,13 +60,14 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel, isEditing
           value={formData.description || ''}
           onChange={handleChange}
           rows={3}
-          className="mt-1 block w-full border border-gray-300 text-gray-600 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          className="w-full px-3 py-2 bg-glass dark:bg-glass-dark border border-glass dark:border-glass-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-900 dark:text-gray-100"
+          placeholder="Enter task description"
         />
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div>
-          <label htmlFor="status" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="status" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Status
           </label>
           <select
@@ -73,7 +75,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel, isEditing
             name="status"
             value={formData.status}
             onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 text-gray-600 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="w-full px-3 py-2 bg-glass dark:bg-glass-dark border border-glass dark:border-glass-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-900 dark:text-gray-100"
           >
             <option value="to-do">To Do</option>
             <option value="in-progress">In Progress</option>
@@ -82,7 +84,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel, isEditing
         </div>
 
         <div>
-          <label htmlFor="priority" className="block text-sm font-medium text-gray-700">
+          <label htmlFor="priority" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
             Priority
           </label>
           <select
@@ -90,7 +92,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel, isEditing
             name="priority"
             value={formData.priority}
             onChange={handleChange}
-            className="mt-1 block w-full border border-gray-300 text-gray-600 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+            className="w-full px-3 py-2 bg-glass dark:bg-glass-dark border border-glass dark:border-glass-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-900 dark:text-gray-100"
           >
             <option value="low">Low</option>
             <option value="medium">Medium</option>
@@ -100,7 +102,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel, isEditing
       </div>
 
       <div>
-        <label htmlFor="due_date" className="block text-sm font-medium text-gray-700">
+        <label htmlFor="due_date" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
           Due Date
         </label>
         <input
@@ -109,7 +111,7 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel, isEditing
           name="due_date"
           value={formData.due_date || ''}
           onChange={handleChange}
-          className="mt-1 block w-full border border-gray-300 text-gray-600 rounded-md px-3 py-2 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+          className="w-full px-3 py-2 bg-glass dark:bg-glass-dark border border-glass dark:border-glass-dark rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-gray-900 dark:text-gray-100"
         />
       </div>
 
@@ -118,14 +120,14 @@ const TaskForm: React.FC<TaskFormProps> = ({ task, onSubmit, onCancel, isEditing
           <button
             type="button"
             onClick={onCancel}
-            className="px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+            className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-glass dark:bg-glass-dark rounded-lg hover:bg-glass-light dark:hover:bg-glass-dark focus:outline-none focus:ring-2 focus:ring-purple-500"
           >
             Cancel
           </button>
         )}
         <button
           type="submit"
-          className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+          className="px-4 py-2 text-sm font-medium text-white bg-gradient-purple-pink rounded-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-purple-500"
         >
           {isEditing ? 'Update Task' : 'Create Task'}
         </button>
