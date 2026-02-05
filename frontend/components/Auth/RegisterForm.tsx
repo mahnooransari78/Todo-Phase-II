@@ -33,8 +33,9 @@ const RegisterForm: React.FC<RegisterFormProps> = ({ onSuccess, onError }) => {
       const response = await apiClient.register(formData);
       const { user, token } = response.data;
 
-      // Store token in localStorage
+      // Store token and user ID in localStorage
       localStorage.setItem('auth_token', token);
+      localStorage.setItem('userId', user.id); // Store user ID for chat API calls
 
       // Call success callback if provided
       if (onSuccess) {

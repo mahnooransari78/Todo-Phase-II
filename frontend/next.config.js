@@ -1,9 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  env: {
-    NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
-    NEXT_PUBLIC_BETTER_AUTH_URL: process.env.NEXT_PUBLIC_BETTER_AUTH_URL,
+  typedRoutes: true, // Updated from experimental.typedRoutes
+  images: {
+    unoptimized: true,
   },
+  // Removed swcMinify as it's not a valid option in this version
+  // Removed output as 'server' is not valid, using default
 };
 
 module.exports = nextConfig;

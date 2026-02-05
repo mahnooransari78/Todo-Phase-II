@@ -80,7 +80,7 @@ def login(user_credentials: UserLogin, session: Session = Depends(get_session)):
         )
 
     # Update last login
-    user.last_login = datetime.utcnow()
+    user.last_login = datetime.now()
     session.add(user)
     session.commit()
 

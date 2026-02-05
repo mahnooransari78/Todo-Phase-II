@@ -1,0 +1,128 @@
+# API Contract: Chat Endpoint for AI-powered Todo Chatbot
+
+**Feature**: AI-powered Todo Chatbot
+**Date**: 2026-01-16
+**Author**: Claude
+
+## Overview
+
+This document specifies the API contract for the chat endpoint that enables users to interact with the AI-powered todo chatbot using natural language.
+
+## Endpoint: POST /api/{user_id}/chat
+
+### Description
+Processes a user message and returns an AI-generated response with any necessary tool calls for todo operations.
+
+### Parameters
+- **Path Parameter:**
+  - `user_id` (string, required): The ID of the authenticated user making the request
+
+### Request Headers
+- `Authorization` (string, required): Bearer token for authentication (JWT)
+- `Content-Type` (string, required): application/json
+
+### Request Body
+```json
+{
+  "conversation_id": "string (optional)",
+  "message": "string (required)"
+}
+```
+
+#### Request Body Fields
+- `conversation_id` (string, optional): Unique identifier for the conversation. If omitted, a new conversation will be created.
+- `message` (string, required): The user's message to the chatbot in natural language.
+
+### Response Codes
+- `200`: Success - Message processed and response generated
+- `400`: Bad Request - Invalid request format or missing required fields
+- `401`: Unauthorized - Invalid or missing authentication token
+- `403`: Forbidden - User attempting to access another user's resources
+- `404`: Not Found - Specified conversation does not exist
+- `500`: Internal Server Error - Unexpected server error
+
+### Successful Response (200)
+```json
+{
+  "conversation_id": "string",
+  "response": "string",
+  "tool_calls": [
+    {
+      "name": "string",
+      "arguments": "object"
+    }
+  ],
+  "timestamp": "string (ISO 8601 datetime)"
+}
+```
+
+#### Response Fields
+- `conversation_id` (string): The ID of the conversation (newly created if not provided in request)
+- `response` (string): The AI-generated response to the user's message
+- `tool_calls` (array): Array of tool calls that the AI agent wants to execute
+  - `name` (string): Name of the tool to call (e.g., "add_task", "list_tasks", "complete_task", "delete_task", "update_task")
+  - `arguments` (object): Arguments to pass to the tool
+- `timestamp` (string): ISO 8601 datetime when the response was generated
+
+### Example Request
+```json
+{
+  "conversation_id": "abc123-uuid-example",
+  "message": "Add a task to buy groceries"
+}
+```
+
+### Example Response
+```json
+{
+  "conversation_id": "abc123-uuid-example",
+  "response": "I've added a task 'buy groceries' for you.",
+  "tool_calls": [
+    {
+      "name": "add_task",
+      "arguments": {
+        "title": "buy groceries",
+        "description": "",
+        "completed": false
+      }
+    }
+  ],
+  "timestamp": "2026-01-16T10:30:00Z"
+}
+```
+
+### Error Responses
+
+#### 401 Unauthorized
+```json
+{
+  "error": "Unauthorized",
+  "message": "Invalid or missing authentication token"
+}
+```
+
+#### 403 Forbidden
+```json
+{
+  "error": "Forbidden",
+  "message": "Access denied: Cannot access another user's resources"
+}
+```
+
+#### 400 Bad Request
+```json
+{
+  "error": "Bad Request",
+  "message": "Missing required field: message"
+}
+```
+
+## Security Requirements
+- All requests must include a valid JWT token in the Authorization header
+- The user_id in the path must match the user ID in the JWT token
+- Requests without proper authentication will return 401 Unauthorized
+- Requests attempting to access another user's conversations will return 403 Forbidden
+
+## Performance Requirements
+- API should respond within 3 seconds for 95% of requests
+- Endpoint should handle concurrent users without degradation
