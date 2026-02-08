@@ -25,9 +25,9 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, toggleCollapse }) => {
   }, [pathname, toggleCollapse]);
 
   const navItems = [
-    { href: '/', label: 'Home', icon: Home },
-    { href: '/dashboard/tasks', label: 'Tasks', icon: Calendar },
-    { href: '/dashboard/profile', label: 'Profile', icon: User },
+    { href: '/' as const, label: 'Home', icon: Home },
+    { href: '/dashboard/tasks' as const, label: 'Tasks', icon: Calendar },
+    { href: '/dashboard/profile' as const, label: 'Profile', icon: User },
   ];
 
   return (
