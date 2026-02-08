@@ -3,13 +3,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
-interface GradientButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+interface GradientButtonProps {
   variant?: 'primary' | 'secondary' | 'ghost' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   isLoading?: boolean;
   children: React.ReactNode;
   icon?: React.ReactNode;
   gradient?: 'purple-pink' | 'indigo-purple';
+  [key: string]: any; // Allow all props including HTML attributes and motion props
 }
 
 const GradientButton: React.FC<GradientButtonProps> = ({

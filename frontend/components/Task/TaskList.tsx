@@ -236,7 +236,7 @@ const TaskList: React.FC<TaskListProps> = ({ onTaskUpdate, onTasksChange }) => {
 
       // Update the task in the local state
       const updatedTasks = tasks.map(task =>
-        task.id === taskId ? { ...task, status: 'completed' } : task
+        task.id === taskId ? { ...task, status: 'completed' as const } : task
       );
       setTasks(updatedTasks);
       if (onTaskUpdate) onTaskUpdate();
